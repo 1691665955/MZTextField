@@ -27,7 +27,6 @@ open class MZTextField: UITextField {
     open override func deleteBackward() {
         let string = self.text ?? ""
         super.deleteBackward()
-        self.delegate
         if self.mzDeleagte != nil && self.mzDeleagte!.responds(to: #selector(MZTextFieldDelegate.textFieldDidDeleteBackword(_: _:))){
             self.mzDeleagte?.textFieldDidDeleteBackword?(self, string)
         }
