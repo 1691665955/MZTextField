@@ -8,25 +8,26 @@
 import UIKit
 
 @objc
-protocol MZTextFieldDelegate: NSObjectProtocol {
+public protocol MZTextFieldDelegate: NSObjectProtocol {
     @objc optional func textFieldDidDeleteBackword(_ textField: MZTextField, _ originText: String)
 }
 
-class MZTextField: UITextField {
+open class MZTextField: UITextField {
     
     /// 最大输入字符串长度、0代表不限制
-    var maxTextLength: Int = 0 {
+    public var maxTextLength: Int = 0 {
         didSet {
             self.addTarget(self, action: #selector(textDidChanged(_:)), for: .editingChanged)
         }
     }
     
     /// MZTextField代理，监听删除按钮点击
-    weak open var mzDeleagte: MZTextFieldDelegate?
+    public weak var mzDeleagte: MZTextFieldDelegate?
     
-    override func deleteBackward() {
+    open override func deleteBackward() {
         let string = self.text ?? ""
         super.deleteBackward()
+        self.delegate
         if self.mzDeleagte != nil && self.mzDeleagte!.responds(to: #selector(MZTextFieldDelegate.textFieldDidDeleteBackword(_: _:))){
             self.mzDeleagte?.textFieldDidDeleteBackword?(self, string)
         }
